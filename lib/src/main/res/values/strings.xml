@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="storage_internal">Internal storage</string>
+    <string name="storage_sd_card">SD card</string>
+    <string name="root_directory">Root directory</string>
+</resources>
