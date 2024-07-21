@@ -1,4 +1,4 @@
-package com.github.aakumykov.android_storage_lister;
+package com.github.aakumykov.android_storage_lister.utils;
 
 import java.io.File;
 
