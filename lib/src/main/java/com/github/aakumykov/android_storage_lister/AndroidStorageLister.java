@@ -38,11 +38,11 @@ import java.util.regex.Pattern;
  * Inspired from Amaze File Manager's code.
  * @link <a href="https://github.com/TeamAmaze/AmazeFileManager">AmazeFileManager</a>
  */
-public class AndroidStoragesLister {
+public class AndroidStorageLister {
 
     private final Context context;
 
-    public AndroidStoragesLister(Context context) {
+    public AndroidStorageLister(Context context) {
         this.context = context;
     }
 
