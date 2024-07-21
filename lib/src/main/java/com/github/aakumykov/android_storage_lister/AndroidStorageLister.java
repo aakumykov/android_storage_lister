@@ -93,20 +93,8 @@ public abstract class AndroidStorageLister<T> {
             if (INTERNAL_SHARED_STORAGE.equalsIgnoreCase(name)) {
                 name = context.getString(R.string.storage_internal);
             }
-            int icon;
-            if (!volume.isRemovable()) {
-                icon = R.drawable.ic_phone_android_white_24dp;
-            } else {
-                // HACK: There is no reliable way to distinguish USB and SD external storage
-                // However it is often enough to check for "USB" String
-                if (name.toUpperCase().contains("USB") || path.getPath().toUpperCase().contains("USB")) {
-                    icon = R.drawable.ic_usb_white_24dp;
-                } else {
-                    icon = R.drawable.ic_sd_storage_white_24dp;
-                }
-            }
 
-            volumes.add(new StorageDirectory(AndroidStorageType.USB, path.getPath(), name, icon));
+            volumes.add(new StorageDirectory(AndroidStorageType.USB, path.getPath(), name));
         }
         return volumes;
     }
@@ -193,24 +181,19 @@ public abstract class AndroidStorageLister<T> {
 
         // Assign a label and icon to each directory
         ArrayList<StorageDirectory> volumes = new ArrayList<>();
-        for (String file : rv) {
-            File f = new File(file);
-            @DrawableRes int icon;
+        for (String path : rv) {
+            File f = new File(path);
             AndroidStorageType type;
 
-            if ("/storage/emulated/legacy".equals(file)
-                    || "/storage/emulated/0".equals(file)
-                    || "/mnt/sdcard".equals(file)) {
-                icon = R.drawable.ic_phone_android_white_24dp;
+            if ("/storage/emulated/legacy".equals(path)
+                    || "/storage/emulated/0".equals(path)
+                    || "/mnt/sdcard".equals(path)) {
                 type = AndroidStorageType.INTERNAL;
-            } else if ("/storage/sdcard1".equals(file)) {
-                icon = R.drawable.ic_sd_storage_white_24dp;
+            } else if ("/storage/sdcard1".equals(path)) {
                 type = AndroidStorageType.SD_CARD;
-            } else if ("/".equals(file)) {
-                icon = R.drawable.ic_drawer_root_white;
+            } else if ("/".equals(path)) {
                 type = AndroidStorageType.INTERNAL;
             } else {
-                icon = R.drawable.ic_sd_storage_white_24dp;
                 type = AndroidStorageType.SD_CARD;
             }
 
@@ -218,7 +201,7 @@ public abstract class AndroidStorageLister<T> {
             int deviceDescription = StorageNaming.getDeviceDescriptionLegacy(f);
             String name = StorageNamingHelper.getNameForDeviceDescription(context, f, deviceDescription);
 
-            volumes.add(new StorageDirectory(type, file, name, icon));
+            volumes.add(new StorageDirectory(type, path, name));
         }
 
         return volumes;
