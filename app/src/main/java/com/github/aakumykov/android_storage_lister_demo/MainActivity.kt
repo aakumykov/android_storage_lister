@@ -1,6 +1,5 @@
 package com.github.aakumykov.android_storage_lister_demo
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -9,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.github.aakumykov.android_storage_lister.AndroidStorageLister
-import com.github.aakumykov.kotlin_playground.StorageDirectory
+import com.github.aakumykov.android_storage_lister.StorageDirectory
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.button).setOnClickListener {
             StringBuilder().apply {
-                AndroidStorageLister(this@MainActivity).storageDirectories.forEach { storageDirectory: StorageDirectory? ->
+                DemoAndroidStorageLister(this@MainActivity).storageDirectories.forEach { storageDirectory: StorageDirectory? ->
                     storageDirectory?.also {
                         append(it.name)
                         append(": ")

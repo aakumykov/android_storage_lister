@@ -23,9 +23,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.github.aakumykov.android_storage_lister.utils.FileUtils;
 import com.github.aakumykov.android_storage_lister.utils.StorageUtils;
-import com.github.aakumykov.kotlin_playground.ExternalSdCardOperation;
-import com.github.aakumykov.kotlin_playground.OTGUtil;
-import com.github.aakumykov.kotlin_playground.StorageDirectory;
+import com.github.aakumykov.android_storage_lister.utils.OTGUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ import java.util.regex.Pattern;
  * Inspired from Amaze File Manager's code.
  * @link <a href="https://github.com/TeamAmaze/AmazeFileManager">AmazeFileManager</a>
  */
-public class AndroidStorageLister {
+public abstract class AndroidStorageLister<T> {
 
     private final Context context;
 
@@ -49,6 +47,9 @@ public class AndroidStorageLister {
     private static final String INTERNAL_SHARED_STORAGE = "Internal shared storage";
     private static final String DEFAULT_FALLBACK_STORAGE_PATH = "/storage/sdcard0";
     private static final Pattern DIR_SEPARATOR = Pattern.compile("/");
+
+    @Nullable
+    public abstract T createStorageRepresentationObject(StorageDirectory storageDirectory);
 
     /**
      * @return paths to all available volumes in the system (include emulated)
@@ -104,7 +105,8 @@ public class AndroidStorageLister {
                     icon = R.drawable.ic_sd_storage_white_24dp;
                 }
             }
-            volumes.add(new StorageDirectory(path.getPath(), name, icon));
+
+            volumes.add(new StorageDirectory(AndroidStorageType.USB, path.getPath(), name, icon));
         }
         return volumes;
     }
@@ -194,24 +196,29 @@ public class AndroidStorageLister {
         for (String file : rv) {
             File f = new File(file);
             @DrawableRes int icon;
+            AndroidStorageType type;
 
             if ("/storage/emulated/legacy".equals(file)
                     || "/storage/emulated/0".equals(file)
                     || "/mnt/sdcard".equals(file)) {
                 icon = R.drawable.ic_phone_android_white_24dp;
+                type = AndroidStorageType.INTERNAL;
             } else if ("/storage/sdcard1".equals(file)) {
                 icon = R.drawable.ic_sd_storage_white_24dp;
+                type = AndroidStorageType.SD_CARD;
             } else if ("/".equals(file)) {
                 icon = R.drawable.ic_drawer_root_white;
+                type = AndroidStorageType.INTERNAL;
             } else {
                 icon = R.drawable.ic_sd_storage_white_24dp;
+                type = AndroidStorageType.SD_CARD;
             }
 
             @StorageNaming.DeviceDescription
             int deviceDescription = StorageNaming.getDeviceDescriptionLegacy(f);
             String name = StorageNamingHelper.getNameForDeviceDescription(context, f, deviceDescription);
 
-            volumes.add(new StorageDirectory(file, name, icon));
+            volumes.add(new StorageDirectory(type, file, name, icon));
         }
 
         return volumes;

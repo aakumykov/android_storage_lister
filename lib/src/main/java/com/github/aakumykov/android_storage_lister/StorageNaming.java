@@ -25,6 +25,8 @@ import android.content.Context;
 import androidx.annotation.IntDef;
 
 import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public final class StorageNaming {
 
@@ -34,6 +36,7 @@ public final class StorageNaming {
   public static final int NOT_KNOWN = 3;
 
   @IntDef({STORAGE_INTERNAL, STORAGE_SD_CARD, ROOT, NOT_KNOWN})
+  @Retention(RetentionPolicy.SOURCE)
   public @interface DeviceDescription {}
 
   /** Retrofit of {@link android.os.storage.StorageVolume#getDescription(Context)} to older apis */
