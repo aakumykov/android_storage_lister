@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android storage lister demo</string>
+    <string name="list_storages">List storages</string>
 </resources>
