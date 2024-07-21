@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="storage_internal">Внутренняя память</string>
+    <string name="storage_sd_card">Карта SD</string>
+    <string name="root_directory">Корневой каталог</string>
+</resources>
