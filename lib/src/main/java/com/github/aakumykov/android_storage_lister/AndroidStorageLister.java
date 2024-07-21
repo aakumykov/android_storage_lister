@@ -94,8 +94,21 @@ public abstract class AndroidStorageLister<T> {
                 name = context.getString(R.string.storage_internal);
             }
 
+            AndroidStorageType type;
+            if (!volume.isRemovable()) {
+                type = AndroidStorageType.INTERNAL;
+            } else {
+                // HACK: There is no reliable way to distinguish USB and SD external storage
+                // However it is often enough to check for "USB" String
+                if (name.toUpperCase().contains("USB") || path.getPath().toUpperCase().contains("USB")) {
+                    type = AndroidStorageType.USB;
+                } else {
+                    type = AndroidStorageType.SD_CARD;
+                }
+            }
+
             volumes.add(createStorageRepresentationObject(
-                    new StorageDirectory(AndroidStorageType.USB, path.getPath(), name)
+                    new StorageDirectory(type, path.getPath(), name)
             ));
         }
         return volumes;

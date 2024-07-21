@@ -26,8 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.button).setOnClickListener {
             StringBuilder().apply {
-                DemoAndroidStorageLister(this@MainActivity).storageDirectories.forEach { storageDirectory: StorageDirectory? ->
-                    storageDirectory?.also {
+                DemoAndroidStorageLister(this@MainActivity).storageDirectories.forEach { storage: Storage? ->
+                    storage?.also {
+                        append("[")
+                        append(it.type)
+                        append("] ")
                         append(it.name)
                         append(": ")
                         append(it.path)

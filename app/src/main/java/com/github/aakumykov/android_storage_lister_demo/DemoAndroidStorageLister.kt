@@ -13,7 +13,8 @@ class DemoAndroidStorageLister(context: Context) : AndroidStorageLister<Storage>
         
         return Storage(
             name = storageDirectory.name,
-            path = storageDirectory.path
+            path = storageDirectory.path,
+            type = storageDirectory.type
         )
     }
 }
