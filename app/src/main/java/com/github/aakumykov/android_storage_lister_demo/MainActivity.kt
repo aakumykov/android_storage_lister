@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.github.aakumykov.android_storage_lister.AndroidStorageDirectory
 import com.github.aakumykov.android_storage_lister.AndroidStorageLister
 import com.github.aakumykov.android_storage_lister.StorageDirectory
 
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun listStorages() {
         StringBuilder().apply {
-            AndroidStorageLister(this@MainActivity).storageDirectories.forEach { storage: StorageDirectory? ->
+            AndroidStorageLister(this@MainActivity).storageDirectories.forEach { storage: AndroidStorageDirectory? ->
                 storage?.also {
                     append("\"${it.name}\" (${it.type}) ")
                     append("\n")

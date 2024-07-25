@@ -51,9 +51,9 @@ public class AndroidStorageLister {
     /**
      * @return paths to all available volumes in the system (include emulated)
      */
-    public synchronized List<StorageDirectory> getStorageDirectories() {
+    public synchronized List<AndroidStorageDirectory> getStorageDirectories() {
 
-        ArrayList<StorageDirectory> volumes;
+        ArrayList<AndroidStorageDirectory> volumes;
 
         if (SDK_INT >= N) {
             volumes = getStorageDirectoriesNew();
@@ -76,9 +76,9 @@ public class AndroidStorageLister {
      * @return All available storage volumes (including internal storage, SD-Cards and USB devices)
      */
     @TargetApi(N)
-    public synchronized ArrayList<StorageDirectory> getStorageDirectoriesNew() {
+    public synchronized ArrayList<AndroidStorageDirectory> getStorageDirectoriesNew() {
         // Final set of paths
-        ArrayList<StorageDirectory> volumes = new ArrayList<>();
+        ArrayList<AndroidStorageDirectory> volumes = new ArrayList<>();
         StorageManager sm = context.getSystemService(StorageManager.class);
         for (StorageVolume volume : sm.getStorageVolumes()) {
             if (!volume.getState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)
@@ -117,7 +117,7 @@ public class AndroidStorageLister {
      *
      * @return All available SD-Cards in the system (include emulated)
      */
-    public synchronized ArrayList<StorageDirectory> getStorageDirectoriesLegacy() {
+    public synchronized ArrayList<AndroidStorageDirectory> getStorageDirectoriesLegacy() {
         List<String> rv = new ArrayList<>();
 
         // Primary physical SD-CARD (not emulated)
@@ -190,7 +190,7 @@ public class AndroidStorageLister {
         }
 
         // Assign a label and icon to each directory
-        ArrayList<StorageDirectory> volumes = new ArrayList<>();
+        ArrayList<AndroidStorageDirectory> volumes = new ArrayList<>();
         for (String path : rv) {
             File f = new File(path);
             AndroidStorageType type;
