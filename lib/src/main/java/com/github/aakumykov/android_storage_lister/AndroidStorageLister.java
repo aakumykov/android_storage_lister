@@ -17,13 +17,12 @@ import android.os.storage.StorageVolume;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.github.aakumykov.android_storage_lister.utils.FileUtils;
-import com.github.aakumykov.android_storage_lister.utils.StorageUtils;
 import com.github.aakumykov.android_storage_lister.utils.OTGUtil;
+import com.github.aakumykov.android_storage_lister.utils.StorageUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ import java.util.regex.Pattern;
  * Inspired from Amaze File Manager's code.
  * @link <a href="https://github.com/TeamAmaze/AmazeFileManager">AmazeFileManager</a>
  */
-public abstract class AndroidStorageLister<T> {
+public class AndroidStorageLister {
 
     private final Context context;
 
@@ -48,15 +47,13 @@ public abstract class AndroidStorageLister<T> {
     private static final String DEFAULT_FALLBACK_STORAGE_PATH = "/storage/sdcard0";
     private static final Pattern DIR_SEPARATOR = Pattern.compile("/");
 
-    @Nullable
-    public abstract T createStorageRepresentationObject(StorageDirectory storageDirectory);
 
     /**
      * @return paths to all available volumes in the system (include emulated)
      */
-    public synchronized ArrayList<T> getStorageDirectories() {
+    public synchronized List<StorageDirectory> getStorageDirectories() {
 
-        ArrayList<T> volumes;
+        ArrayList<StorageDirectory> volumes;
 
         if (SDK_INT >= N) {
             volumes = getStorageDirectoriesNew();
@@ -79,9 +76,9 @@ public abstract class AndroidStorageLister<T> {
      * @return All available storage volumes (including internal storage, SD-Cards and USB devices)
      */
     @TargetApi(N)
-    public synchronized ArrayList<T> getStorageDirectoriesNew() {
+    public synchronized ArrayList<StorageDirectory> getStorageDirectoriesNew() {
         // Final set of paths
-        ArrayList<T> volumes = new ArrayList<>();
+        ArrayList<StorageDirectory> volumes = new ArrayList<>();
         StorageManager sm = context.getSystemService(StorageManager.class);
         for (StorageVolume volume : sm.getStorageVolumes()) {
             if (!volume.getState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)
@@ -107,9 +104,7 @@ public abstract class AndroidStorageLister<T> {
                 }
             }
 
-            volumes.add(createStorageRepresentationObject(
-                    new StorageDirectory(type, path.getPath(), name)
-            ));
+            volumes.add(new StorageDirectory(type, path.getPath(), name));
         }
         return volumes;
     }
@@ -122,7 +117,7 @@ public abstract class AndroidStorageLister<T> {
      *
      * @return All available SD-Cards in the system (include emulated)
      */
-    public synchronized ArrayList<T> getStorageDirectoriesLegacy() {
+    public synchronized ArrayList<StorageDirectory> getStorageDirectoriesLegacy() {
         List<String> rv = new ArrayList<>();
 
         // Primary physical SD-CARD (not emulated)
@@ -195,7 +190,7 @@ public abstract class AndroidStorageLister<T> {
         }
 
         // Assign a label and icon to each directory
-        ArrayList<T> volumes = new ArrayList<>();
+        ArrayList<StorageDirectory> volumes = new ArrayList<>();
         for (String path : rv) {
             File f = new File(path);
             AndroidStorageType type;
@@ -216,9 +211,7 @@ public abstract class AndroidStorageLister<T> {
             int deviceDescription = StorageNaming.getDeviceDescriptionLegacy(f);
             String name = StorageNamingHelper.getNameForDeviceDescription(context, f, deviceDescription);
 
-            volumes.add(createStorageRepresentationObject(
-                    new StorageDirectory(type, path, name)
-            ));
+            volumes.add(new StorageDirectory(type, path, name));
         }
 
         return volumes;
