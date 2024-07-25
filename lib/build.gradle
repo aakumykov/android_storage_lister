@@ -2,18 +2,19 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id 'maven-publish'
+    id 'kotlin-parcelize'
 }
 
 project.ext {
     artifactId = 'android_storage_lister'
     groupId = 'com.github.aakumykov'
 
-    majorVersionCode = 2
+    majorVersionCode = 3
     minorVersionCode = 0
     patchVersionCode = 0
     suffix = "alpha"
 
-    versionCode = 7
+    versionCode = 8
 
     versionName = majorVersionCode + "." + minorVersionCode + "." + patchVersionCode + "-" + suffix
 }
