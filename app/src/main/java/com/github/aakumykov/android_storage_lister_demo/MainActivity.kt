@@ -25,21 +25,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.button).setOnClickListener {
-            StringBuilder().apply {
-                DemoAndroidStorageLister(this@MainActivity).storageDirectories.forEach { storage: Storage? ->
-                    storage?.also {
-                        append("[")
-                        append(it.type)
-                        append("] ")
-                        append(it.name)
-                        append(": ")
-                        append(it.path)
-                        append("\n")
-                    }
+            listStorages()
+        }
+
+        listStorages()
+    }
+
+    private fun listStorages() {
+        StringBuilder().apply {
+            AndroidStorageLister(this@MainActivity).storageDirectories.forEach { storage: StorageDirectory? ->
+                storage?.also {
+                    append("\"${it.name}\" (${it.type}) ")
+                    append("\n")
+                    append(it.path)
+                    append("\n")
+                    append("\n")
                 }
-            }.also {
-                findViewById<TextView>(R.id.textView).text = it
             }
+        }.also {
+            findViewById<TextView>(R.id.textView).text = it
         }
     }
 }
