@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
  * Inspired from Amaze File Manager's code.
  * @link <a href="https://github.com/TeamAmaze/AmazeFileManager">AmazeFileManager</a>
  */
-public class AndroidStorageLister {
+public abstract class AndroidStorageLister {
 
     private final Context context;
 
@@ -47,6 +47,11 @@ public class AndroidStorageLister {
     private static final String DEFAULT_FALLBACK_STORAGE_PATH = "/storage/sdcard0";
     private static final Pattern DIR_SEPARATOR = Pattern.compile("/");
 
+    public abstract AndroidStorageDirectory createStorageDirectory(
+            AndroidStorageType type,
+            String name,
+            String path
+    );
 
     /**
      * @return paths to all available volumes in the system (include emulated)
@@ -104,7 +109,7 @@ public class AndroidStorageLister {
                 }
             }
 
-            volumes.add(new StorageDirectory(type, path.getPath(), name));
+            volumes.add(createStorageDirectory(type, name, path.getPath()));
         }
         return volumes;
     }
@@ -211,7 +216,7 @@ public class AndroidStorageLister {
             int deviceDescription = StorageNaming.getDeviceDescriptionLegacy(f);
             String name = StorageNamingHelper.getNameForDeviceDescription(context, f, deviceDescription);
 
-            volumes.add(new StorageDirectory(type, path, name));
+            volumes.add(createStorageDirectory(type, name, path));
         }
 
         return volumes;

@@ -9,12 +9,12 @@ project.ext {
     artifactId = 'android_storage_lister'
     groupId = 'com.github.aakumykov'
 
-    majorVersionCode = 3
+    majorVersionCode = 4
     minorVersionCode = 0
     patchVersionCode = 0
     suffix = "alpha"
 
-    versionCode = 8
+    versionCode = 9
 
     versionName = majorVersionCode + "." + minorVersionCode + "." + patchVersionCode + "-" + suffix
 }
