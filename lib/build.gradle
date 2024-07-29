@@ -11,10 +11,10 @@ project.ext {
 
     majorVersionCode = 4
     minorVersionCode = 1
-    patchVersionCode = 0
+    patchVersionCode = 1
     suffix = "alpha"
 
-    versionCode = 10
+    versionCode = 11
 
     versionName = majorVersionCode + "." + minorVersionCode + "." + patchVersionCode + "-" + suffix
 }
