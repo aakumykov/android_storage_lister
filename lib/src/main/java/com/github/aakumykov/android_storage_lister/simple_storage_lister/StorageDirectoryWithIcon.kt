@@ -1,4 +1,4 @@
-package com.github.aakumykov.android_storage_lister_demo
+package com.github.aakumykov.android_storage_lister.simple_storage_lister
 
 import androidx.annotation.DrawableRes
 import com.github.aakumykov.android_storage_lister.AndroidStorageDirectory

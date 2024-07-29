@@ -1,11 +1,12 @@
-package com.github.aakumykov.android_storage_lister_demo
+package com.github.aakumykov.android_storage_lister.simple_storage_lister
 
 import android.content.Context
 import com.github.aakumykov.android_storage_lister.AndroidStorageDirectory
 import com.github.aakumykov.android_storage_lister.AndroidStorageLister
 import com.github.aakumykov.android_storage_lister.AndroidStorageType
+import com.github.aakumykov.android_storage_lister.R
 
-class CustomStorageLister(applicationContext: Context) : AndroidStorageLister(applicationContext) {
+class SimpleStorageLister(applicationContext: Context) : AndroidStorageLister(applicationContext) {
 
     override fun createStorageDirectory(
         type: AndroidStorageType,

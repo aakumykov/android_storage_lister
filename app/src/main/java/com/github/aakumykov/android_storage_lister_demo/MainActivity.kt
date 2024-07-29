@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.github.aakumykov.android_storage_lister.AndroidStorageDirectory
-import com.github.aakumykov.android_storage_lister.AndroidStorageLister
+import com.github.aakumykov.android_storage_lister.simple_storage_lister.SimpleStorageLister
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun listStorages() {
         StringBuilder().apply {
-            CustomStorageLister(this@MainActivity).storageDirectories.forEach { storage: AndroidStorageDirectory? ->
+            SimpleStorageLister(this@MainActivity).storageDirectories.forEach { storage: AndroidStorageDirectory? ->
                 storage?.also {
                     append("\"${it.name}\" (${it.type}) ")
                     append("\n")
