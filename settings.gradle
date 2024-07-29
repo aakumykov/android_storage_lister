@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Android storage lister demo"
+rootProject.name = "android_storage_lister"
 include ':app'
 include ':lib'
